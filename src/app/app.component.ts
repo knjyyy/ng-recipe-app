@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-recipe-app';
+  headerNav: string = 'recipes';
+
+  onHeaderClicked(headerNav: string) {
+    this.headerNav = headerNav;
+  }
 }
