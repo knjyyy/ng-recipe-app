@@ -6,16 +6,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Output('headerClicked') headerClicked = new EventEmitter<string>();
-
   collapsed = true;
 
-  constructor() { }
-
   ngOnInit(): void {
-  }
-
-  onClickNav(clickedHeader: string) {
-    this.headerClicked.emit(clickedHeader);    
   }
 }
