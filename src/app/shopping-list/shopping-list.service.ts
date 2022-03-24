@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter, OnInit } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Ingredient } from './../shared/ingredient.model';
 
 @Injectable({ providedIn: 'root' })
