@@ -76,7 +76,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     else
       this.recipeService.addRecipe(recipe);
 
-    this.router.navigate(['../']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   onAddIngredient() {
@@ -84,5 +84,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       name: new FormControl(null, Validators.required),
       amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
     }))
+  }
+
+  onClickCancel(){
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }
