@@ -1,5 +1,6 @@
-import { ViewChild, ElementRef, Output,EventEmitter } from '@angular/core';
+import { Output,EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 
@@ -9,9 +10,11 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-list-edit.component.css']
 })
 export class ShoppingListEditComponent implements OnInit {
-  @ViewChild('ingredientName', {static: false}) editName: ElementRef;
-  @ViewChild('ingredientAmount', {static: false}) editAmount: ElementRef;
   @Output() saveIngredient = new EventEmitter<Ingredient>();
+  ingredient = {
+    name: '',
+    amount: ''
+  };
 
   constructor(private shoppingListService: ShoppingListService) { }
 
@@ -19,7 +22,6 @@ export class ShoppingListEditComponent implements OnInit {
   }
 
   onClickAdd() {
-    this.shoppingListService.saveIngredient(new Ingredient(this.editName.nativeElement.value, this.editAmount.nativeElement.value))
     this.resetFields();
   }
 
@@ -32,7 +34,11 @@ export class ShoppingListEditComponent implements OnInit {
   }
   
   resetFields () {
-    this.editName.nativeElement.value = "";
-    this.editAmount.nativeElement.value = "";
   }
+
+  onAddItem(form: NgForm){
+    const {name, amount} = form.value;
+    this.shoppingListService.saveIngredient(new Ingredient(name, amount));
+    form.reset();
+  } 
 }
