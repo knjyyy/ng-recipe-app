@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 
 import { DropdownDirective } from './shared/dropdown.directive';
@@ -32,7 +32,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     RecipeEditComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, FormsModule
+    BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule
   ],
   providers: [ ShoppingListService], 
   bootstrap: [AppComponent]
