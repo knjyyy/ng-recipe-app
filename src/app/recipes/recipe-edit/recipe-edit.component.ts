@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RecipesService } from '../recipes.service';
@@ -45,8 +45,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       if(recipe.ingredients) {
         for(let ingredient of recipe.ingredients) {
           recipeIngredients.push(new FormGroup({
-            'name': new FormControl(ingredient.name),
-            'amount': new FormControl(ingredient.amount)
+            'name': new FormControl(ingredient.name, Validators.required),
+            'amount': new FormControl(ingredient.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
           }));
         }
       }
@@ -54,9 +54,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     }
 
     this.recipeForm = new FormGroup({
-      '_name': new FormControl(recipeName),
-      '_imagePath': new FormControl(recipePath),
-      '_description': new FormControl(recipeDescription),
+      '_name': new FormControl(recipeName, Validators.required),
+      '_imagePath': new FormControl(recipePath, Validators.required),
+      '_description': new FormControl(recipeDescription, Validators.required),
       '_ingredients': recipeIngredients
     });
   }
@@ -71,8 +71,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('_ingredients')).push(new FormGroup({
-      name: new FormControl(),
-      amount: new FormControl()
+      name: new FormControl(null, Validators.required),
+      amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
     }))
   }
 }
