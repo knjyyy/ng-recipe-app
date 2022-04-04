@@ -46,8 +46,9 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     this.resetFields();
   }
 
-  onClickEdit() {
-    console.log('Delete');
+  onClickDelete() {
+    this.shoppingListService.deleteIngredient(this.editIndex);
+    this.resetFields();
   }
   
   onClickReset() {
@@ -57,6 +58,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   resetFields () {
     this.ingredientForm.reset();
     this.editMode = false;
+    this.editIndex = -1;
+    this.editIngredient = null;
   }
 
   onSubmit(form: NgForm){
