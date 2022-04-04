@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Recipe } from '../recipe.model';
 import { RecipesService } from '../recipes.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipesService) { }
+  constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router) { }
 
   ngOnInit(): void {
     this.paramsSubscription = this.route.params.subscribe((params: Params) => {
@@ -67,6 +68,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log(this.recipeForm.value);
+    const {_name, _description, _imagePath, _ingredients} = this.recipeForm.value;
+    const recipe = new Recipe(_name, _description, _imagePath, _ingredients);
+    
+    if(this.editMode)  
+      this.recipeService.editRecipe(this.id, recipe);
+    else
+      this.recipeService.addRecipe(recipe);
+
+    this.router.navigate(['../']);
   }
 
   onAddIngredient() {

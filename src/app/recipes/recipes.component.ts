@@ -18,6 +18,7 @@ export class RecipesComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.recipesService.recipeSelected.subscribe((recipeRec: Recipe) => {
       this.currentRecipe = recipeRec;
     });
+
    }
 
   ngOnDestroy() {
