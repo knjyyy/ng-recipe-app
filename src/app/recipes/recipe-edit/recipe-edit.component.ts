@@ -11,7 +11,6 @@ import { RecipesService } from '../recipes.service';
   styleUrls: ['./recipe-edit.component.css']
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
-  
   id: number;
   editMode: boolean = false;
   paramsSubscription: Subscription;
@@ -25,6 +24,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.editMode = params['id'] != null;
       this.initForm();
     })
+
+    console.log(this.recipeForm.value);
   }
 
   ngOnDestroy() {
