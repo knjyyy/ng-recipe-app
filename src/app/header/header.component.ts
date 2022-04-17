@@ -24,6 +24,6 @@ export class HeaderComponent implements OnInit {
     console.log("onClickFetch()");
     const newIngredient = new Ingredient('milk', 3);
     const ingredients = [newIngredient];
-    this.dataStorageService.fetchRecipes();
+    this.dataStorageService.fetchRecipes().subscribe(() => {});
   }
 }

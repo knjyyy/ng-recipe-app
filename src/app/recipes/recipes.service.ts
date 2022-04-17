@@ -1,64 +1,68 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Recipe } from './recipe.model';
 import { ShoppingListService } from './../shopping-list/shopping-list.service';
 
 import { Subject } from 'rxjs';
+import { DataStorageService } from '../shared/data-storage.service';
 
-@Injectable({providedIn: 'root'})
-export class RecipesService {
+@Injectable({ providedIn: 'root' })
+export class RecipesService implements OnInit {
   recipeSelected = new Subject<Recipe>();
   recipesChanged = new Subject<Recipe[]>();
+  private recipes: Recipe[] = [];
 
-  constructor (private shoppingListService: ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService ) { }
 
-    recipes: Recipe[] = [
-        new Recipe(
-          'Silantro Paella',
-          'This is a must try paella!',
-          'https://s3.ap-southeast-1.amazonaws.com/thetravelinsider-20190624/insiders-recommendations/March2018/dDtB0JdcMw99BqyXYNvW.jpg',
-          [new Ingredient('Seafood', 10), new Ingredient('Rice', 10)]
-        ), new Recipe(
-          'Silantro Quesadilla',
-          'Very cheesy, and affordable!',
-          'https://farm4.staticflickr.com/3808/8937653743_9c09e6f2df_z.jpg',
-          [new Ingredient('Mozarella Cheese', 5), new Ingredient('Fries', 5)]
-        )
-      ];
+  // recipes: Recipe[] = [
+  //     new Recipe(
+  //       'Silantro Paella',
+  //       'This is a must try paella!',
+  //       'https://s3.ap-southeast-1.amazonaws.com/thetravelinsider-20190624/insiders-recommendations/March2018/dDtB0JdcMw99BqyXYNvW.jpg',
+  //       [new Ingredient('Seafood', 10), new Ingredient('Rice', 10)]
+  //     ), new Recipe(
+  //       'Silantro Quesadilla',
+  //       'Very cheesy, and affordable!',
+  //       'https://farm4.staticflickr.com/3808/8937653743_9c09e6f2df_z.jpg',
+  //       [new Ingredient('Mozarella Cheese', 5), new Ingredient('Fries', 5)]
+  //     )
+  //   ];
 
-      getRecipes() {
-        return this.recipes.slice();
-      }
+  ngOnInit() {   }
 
-    getRecipe(id: number) {
-      return this.recipes[id];
-    }
+  getRecipes() {
+    return this.recipes.slice();
+  }
 
-    setRecipes(recipes: Recipe[]){
-      this.recipes = recipes;
-      this.recipesChanged.next(this.recipes.slice());
-    }
+  getRecipe(id: number) {
+    return this.recipes[id];
+  }
 
-    sendToShoppingList(ingredients: Ingredient[]) {
-      this.shoppingListService.saveIngredients(ingredients);
-    }  
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
-    addRecipe(recipe: Recipe) {
-      this.recipes.push(recipe);
-      this.refreshRecipeList();
-    }
+  sendToShoppingList(ingredients: Ingredient[]) {
+    this.shoppingListService.saveIngredients(ingredients);
+  }
 
-    editRecipe(index: number, recipe: Recipe) {
-      this.recipes[index] = recipe;
-      this.refreshRecipeList();
-    }
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.refreshRecipeList();
+  }
 
-    deleteRecipe(index:number) {
-      this.recipes.splice(index, 1);
-      this.refreshRecipeList();
-    }
+  editRecipe(index: number, recipe: Recipe) {
+    this.recipes[index] = recipe;
+    this.refreshRecipeList();
+  }
 
-    refreshRecipeList() {
-      this.recipesChanged.next(this.recipes.slice());
-    }
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.refreshRecipeList();
+  }
+
+  refreshRecipeList() {
+    this.recipesChanged.next(this.recipes.slice());
+  }
 }
