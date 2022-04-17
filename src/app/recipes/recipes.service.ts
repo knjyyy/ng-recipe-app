@@ -16,7 +16,7 @@ export class RecipesService {
         new Recipe(
           'Silantro Paella',
           'This is a must try paella!',
-          'https://scontent.fmnl13-2.fna.fbcdn.net/v/t1.6435-9/40380073_1358719900897724_1062411687388250112_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=730e14&_nc_ohc=RiZI_zTSnmcAX-oYLhU&_nc_ht=scontent.fmnl13-2.fna&oh=00_AT-K0IAHo45oOyXZBAekM4dbuudVg9_zG7yNmGGkfgNNDA&oe=6257D810',
+          'https://s3.ap-southeast-1.amazonaws.com/thetravelinsider-20190624/insiders-recommendations/March2018/dDtB0JdcMw99BqyXYNvW.jpg',
           [new Ingredient('Seafood', 10), new Ingredient('Rice', 10)]
         ), new Recipe(
           'Silantro Quesadilla',
@@ -32,6 +32,11 @@ export class RecipesService {
 
     getRecipe(id: number) {
       return this.recipes[id];
+    }
+
+    setRecipes(recipes: Recipe[]){
+      this.recipes = recipes;
+      this.recipesChanged.next(this.recipes.slice());
     }
 
     sendToShoppingList(ingredients: Ingredient[]) {
